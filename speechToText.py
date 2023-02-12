@@ -16,37 +16,49 @@ def Amount(text):
     return amountInt
 
 def EnableVoiceCommand():
-    try:
-        with sr.Microphone() as source:
-            SpeakText("Do you want to enable voice command?")
-            r.adjust_for_ambient_noise(source,duration=0.2)
-            audio=r.listen(source)
-            AnsInText=r.recognize_google(audio)
-            print(AnsInText)
-            print(type(AnsInText))
-            return AnsInText
-    except sr.RequestError as e:
-        print(e)
-    except sr.UnknownValueError as e:
-        print(e)
+    while(1):
+        try:
+            with sr.Microphone() as source:
+                SpeakText("Do you want to enable voice command?")
+                r.adjust_for_ambient_noise(source,duration=0)
+                audio=r.listen(source)
+                AnsInText=r.recognize_google(audio)
+                print(AnsInText)
+                print(type(AnsInText))
+                SpeakText(AnsInText)
+                return AnsInText
+        except sr.RequestError as e:
+            print(e)
+        except sr.UnknownValueError as e:
+            print(e)
 
 def VoiceCommands():
-    try:
-        with sr.Microphone() as source1:
-            r.adjust_for_ambient_noise(source1,duration=0.2)
-            audio=r.listen(source1)
-            AudioInText=r.recognize_google(audio)
-            rs=str(Amount(AudioInText))
-            SpeakText(rs+"Added")
-    except sr.RequestError as e:
-        print(e)
-    except sr.UnknownValueError as e:
-        print(e)
+    SpeakText("Voice Commands Activated")
+    while(1):
+        try:
+            with sr.Microphone() as source1:
+                r.adjust_for_ambient_noise(source1,duration=0)
+                audio=r.listen(source1)
+                AudioInText=r.recognize_google(audio)
+                # print("\n\n\n\n\n"+type(AudioInText))
+                try:
+                    rs=str(Amount(AudioInText))
+                    SpeakText(rs+"Added")
+                except IndexError as e:
+                    SpeakText("Please say the Amount of money to be added")
+        except sr.RequestError as e:
+            print(e)
+        except sr.UnknownValueError as e:
+            print(e)
 
 if __name__=="__main__":
+    #Say yes i want to 
     Ans=EnableVoiceCommand()#Error Ans=NONE Convert To Str
-    print("Ans is "+Ans)
-    if Ans.lower()=="yes":
+    # Ans=list(Ans)
+    Ans=Ans.split(' ')
+    print(Ans)
+    # print("Ans is "+Ans)
+    if 'yes' in Ans:
         VoiceCommands()
     else:
         SpeakText("Voice Command Deactived")
