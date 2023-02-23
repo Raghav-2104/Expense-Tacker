@@ -3,7 +3,7 @@ base = Tk()
 base.geometry('500x500')  
 base.title("Registration Form") 
 bg = PhotoImage(file = "ExpenseTracker.png")
-base.wm_attributes('-transparentcolor', '#ab23ff')
+
 
 label6 = Label(base, image = bg)
 label6.place(x = 0, y = 0)
