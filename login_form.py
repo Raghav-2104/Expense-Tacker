@@ -6,6 +6,7 @@ from Registration import register
 import pywhatkit
 from datetime import timedelta
 import datetime
+from forgetPassword import ForgetPasswordWindow
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -37,7 +38,7 @@ class LoginForm(tk.Tk):
         self.entry_password = tk.Entry(self,show='*')
         self.entry_password.place(x=240, y=170)
 
-        self.button_forgot_password = tk.Button(self, text='Forgot Password?', width=20, bg='black', fg='white')
+        self.button_forgot_password = tk.Button(self, text='Forgot Password?', width=20, bg='black', fg='white',command=self.forget)
         self.button_forgot_password.place(x=155, y=250)
 
         self.button_submit = tk.Button(self, text='Submit', width=20, bg='black', fg='white',command=self.submit)
@@ -64,8 +65,9 @@ class LoginForm(tk.Tk):
         
 
     def forget(self):
-        #Create a window for forget password
-        pass
+        ForgetPasswordWindow()
+        self.destroy()
+        
 if __name__ == "__main__":
     app = LoginForm()
     app.mainloop()
