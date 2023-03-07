@@ -12,104 +12,105 @@ mydb = mysql.connector.connect(
     database="expense_tracker"
 )
 mycursor = mydb.cursor()
-base = Tk()
-base.geometry('500x500')
-base.title("Registration Form")
 
-# bg = PhotoImage(file = "ExpenseTracker.png")
-# label6 = Label(base, image = bg)
-# label6.place(x = 0, y = 0)
+class register(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
+        
+        self.geometry('500x500')
+        self.title("Registration Form")
 
-registration = Label(base, text="Registration form",width=20, font=("bold", 20))
-registration.place(x=90, y=53)
-
-
-Name = Label(base, text="FullName", width=17, font=("bold", 10))
-Name.place(x=80, y=130)
-
-NameEntry = Entry(base)
-NameEntry.place(x=240, y=130)
-
-Email = Label(base, text="Email", width=17, font=("bold", 10))
-Email.place(x=68, y=170)
-
-EmailEntry = Entry(base)
-EmailEntry.place(x=240, y=170)
+        self.registration = Label(self, text="Registration form",width=20, font=("bold", 20))
+        self.registration.place(x=90, y=53)
 
 
-PhnNo = Label(base, text="Phone number", width=17, font=("bold", 10))
-PhnNo.place(x=70, y=220)
+        self.Name = Label(self, text="FullName", width=17, font=("bold", 10))
+        self.Name.place(x=80, y=130)
 
-PhnNoEntry = Entry(base)
-PhnNoEntry.place(x=240, y=220)
+        self.NameEntry = Entry(self)
+        self.NameEntry.place(x=240, y=130)
 
-Username = Label(base, text="Username", width=17, font=("bold", 10))
-Username.place(x=80, y=270)
+        self.Email = Label(self, text="Email", width=17, font=("bold", 10))
+        self.Email.place(x=68, y=170)
 
-UsernameEntry = Entry(base)
-UsernameEntry.place(x=240, y=270)
-
-
-Password = Label(base, text="Password:", width=17, font=("bold", 10))
-Password.place(x=70, y=320)
-
-PasswordEntry = Entry(base, show='*')
-PasswordEntry.place(x=240, y=320)
+        self.EmailEntry = Entry(self)
+        self.EmailEntry.place(x=240, y=170)
 
 
-def click():
-    # print("True")
-    length = len(PasswordEntry.get())
-    small = re.search("[a-z]", PasswordEntry.get())
-    caps = re.search("[A-Z]", PasswordEntry.get())
-    num = re.search("[0-9]", PasswordEntry.get())
-    spchar = re.search("[_@$]", PasswordEntry.get())
+        self.PhnNo = Label(self, text="Phone number", width=17, font=("bold", 10))
+        self.PhnNo.place(x=70, y=220)
 
-    if length < 8 or small == None or caps == None or num == None or spchar == None:
-        showinfo(title="Password", message='''Primary conditions for password validation:
-            1.Minimum 8 characters.
-            2.The alphabet must be between [a-z]
-            3.At least one alphabet should be of Upper Case [A-Z]
-            4.At least 1 number or digit between [0-9].
-            5.At least 1 character from [ _ or @ or $ ].''')
-        return False
-    else:
-        # print(False)
-        return True
+        self.PhnNoEntry = Entry(self)
+        self.PhnNoEntry.place(x=240, y=220)
 
-def add_data(*args):
-    name=NameEntry.get()
-    email=EmailEntry.get()
-    phone=PhnNoEntry.get()
-    user=UsernameEntry.get()
-    password=PasswordEntry.get()
-    mycursor.execute("insert into registration values(%s,%s,%s,%s,%s)",(name,email,phone,user,password))
-    mycursor.execute("insert into raghav values(%s,%s,%s,%s,%s)",(name,email,phone,user,password))
-    mydb.commit()
-    showinfo("Registration","Registration Successfully")
+        self.Username = Label(self, text="Username", width=17, font=("bold", 10))
+        self.Username.place(x=80, y=270)
 
-def checkUsername():
-    # pass
-    name = UsernameEntry.get()
-    mycursor.execute("SHOW TABLES")
-    ans=False
-    for x in mycursor:
-        if x[0] == name:
-            ans=False
-            showinfo(title="Username", message='''Username is already in use!! Please try a different username''')
-            break;
+        self.UsernameEntry = Entry(self)
+        self.UsernameEntry.place(x=240, y=270)
+
+
+        self.Password = Label(self, text="Password:", width=17, font=("bold", 10))
+        self.Password.place(x=70, y=320)
+
+        self.PasswordEntry = Entry(self, show='*')
+        self.PasswordEntry.place(x=240, y=320)
+        self.Button=Button(self, text='Submit', width=20, bg='black', fg='white',command=self.combine_funcs).place(x=180, y=380)
+        
+    def click(self):
+          # print("True")
+        length = len(self.PasswordEntry.get())
+        small = re.search("[a-z]", self.PasswordEntry.get())
+        caps = re.search("[A-Z]", self.PasswordEntry.get())
+        num = re.search("[0-9]", self.PasswordEntry.get())
+        spchar = re.search("[_@$]", self.PasswordEntry.get())
+
+        if length < 8 or small == None or caps == None or num == None or spchar == None:
+            showinfo(title="Password", message='''Primary conditions for password validation:
+                1.Minimum 8 characters.
+                2.The alphabet must be between [a-z]
+                3.At least one alphabet should be of Upper Case [A-Z]
+                4.At least 1 number or digit between [0-9].
+                5.At least 1 character from [ _ or @ or $ ].''')
+            return False
         else:
-            ans=True
-    return ans
+              # print(False)
+              return True
+
+    def add_data(self,*args):
+          name=self.NameEntry.get()
+          email=self.EmailEntry.get()
+          phone=self.PhnNoEntry.get()
+          user=self.UsernameEntry.get()
+          password=self.PasswordEntry.get()
+          try:
+            mycursor.execute("insert into registration values(%s,%s,%s,%s,%s)",(name,email,phone,user,password))
+            mydb.commit()
+            showinfo("Registration","Registration Successfully")
+          except mysql.connector.IntegrityError as err:
+            print("Error: {}".format(err))
+
+    def checkUsername(self):
+            # pass
+          print("CheckUSername")
+          name = self.UsernameEntry.get()
+          mycursor.execute("SELECT user from registration")
+          rows = mycursor.fetchall()
+          ans = True
+          for row in rows:
+              if row[0] == name:
+                  ans = False
+                  showinfo(title="Username", message='''Username is already in use!! Please try a different username''')
+                  break
+          return ans
 
 
-def combine_funcs():
-    if checkUsername()and click():
-        add_data()
+    def combine_funcs(self):
+          if self.checkUsername() and self.click():
+            self.add_data()
 
 
-Button(base, text='Submit', width=20, bg='black', fg='white',command=combine_funcs).place(x=180, y=380)
-
-base.mainloop()
-
+if __name__ == "__main__":
+  app = register()
+  app.mainloop()
