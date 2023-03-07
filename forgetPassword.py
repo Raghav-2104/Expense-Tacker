@@ -5,44 +5,43 @@ import pywhatkit
 import random
 from tkinter.messagebox import showinfo
 
-class ForgetPasswordWindow(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.master.title("Forget Password")
-        self.master.geometry("500x500")
+class ForgetPasswordWindow(tk.Tk):
+    def __init__(self,):
+        super().__init__()
+        self.title("Forget Password")
+        self.geometry("500x500")
         self.create_widgets()
 
     def create_widgets(self):
         # Label for the WhatsApp number
-        self.whatsapp_label = tk.Label(self.master, text="WhatsApp Number (with country code):")
+        self.whatsapp_label = tk.Label(self, text="WhatsApp Number (with country code):")
         self.whatsapp_label.pack()
         # Entry box for the WhatsApp number
-        self.whatsapp_entry = tk.Entry(self.master)
+        self.whatsapp_entry = tk.Entry(self)
         self.whatsapp_entry.pack()
         # Label for the OTP
-        self.otp_label = tk.Label(self.master, text="OTP received on WhatsApp:")
+        self.otp_label = tk.Label(self, text="OTP received on WhatsApp:")
         self.otp_label.pack()
         # Entry box for the OTP
-        self.otp_entry = tk.Entry(self.master, show="*")
+        self.otp_entry = tk.Entry(self, show="*")
         self.otp_entry.pack()
         # Button to generate OTP
-        self.generate_otp_button = tk.Button(self.master, text="Generate OTP", command=self.generate_otp)
+        self.generate_otp_button = tk.Button(self, text="Generate OTP", command=self.generate_otp)
         self.generate_otp_button.pack()
         # Label for the new password
-        self.new_password_label = tk.Label(self.master, text="New Password:")
+        self.new_password_label = tk.Label(self, text="New Password:")
         self.new_password_label.pack()
         # Entry box for the new password
-        self.new_password_entry = tk.Entry(self.master, show="*")
+        self.new_password_entry = tk.Entry(self, show="*")
         self.new_password_entry.pack()
         # Label for confirming the new password
-        self.confirm_password_label = tk.Label(self.master, text="Confirm Password:")
+        self.confirm_password_label = tk.Label(self, text="Confirm Password:")
         self.confirm_password_label.pack()
         # Entry box for confirming the new password
-        self.confirm_password_entry = tk.Entry(self.master, show="*")
+        self.confirm_password_entry = tk.Entry(self, show="*")
         self.confirm_password_entry.pack()
         # Button to reset password
-        self.reset_button = tk.Button(self.master, text="Reset Password", command=self.reset_password)
+        self.reset_button = tk.Button(self, text="Reset Password", command=self.reset_password)
         self.reset_button.pack()
 
         self.number = random.randint(0, 9999)
@@ -96,6 +95,5 @@ class ForgetPasswordWindow(tk.Frame):
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ForgetPasswordWindow(master=root)
+    app = ForgetPasswordWindow()
     app.mainloop()
