@@ -47,6 +47,7 @@ class ForgetPasswordWindow(tk.Tk):
         self.number = random.randint(0, 9999)
     def reset_password(self):
         whatsapp = self.whatsapp_entry.get()
+        print(whatsapp[3:])
         otp = self.otp_entry.get()
         new_password = self.new_password_entry.get()
         confirm_password = self.confirm_password_entry.get()
@@ -65,7 +66,7 @@ class ForgetPasswordWindow(tk.Tk):
                 try:
                     conn = mysql.connector.connect(user='root', password='Raghav@2104', host='localhost', database='expense_tracker')
                     cursor = conn.cursor()
-                    cursor.execute("UPDATE registration SET password=%s WHERE phone=%s", (new_password, whatsapp))
+                    cursor.execute("UPDATE registration SET password=%s WHERE phone=%s", (new_password, whatsapp[3:]))
                     conn.commit()
                     messagebox.showinfo("Success", "Your password has been updated.")
                 except mysql.connector.Error as error:
@@ -78,7 +79,7 @@ class ForgetPasswordWindow(tk.Tk):
                 messagebox.showerror("Error", "The OTP entered is incorrect.")
 
     def verify_otp(self, whatsapp, otp):
-        print(int(self.otp_entry.get())==self.number)
+        # print(int(self.otp_entry.get())==self.number)
         if int(self.otp_entry.get())==self.number:
             return True
         else:
@@ -90,7 +91,7 @@ class ForgetPasswordWindow(tk.Tk):
         if not whatsapp:
             messagebox.showerror("Error", "Please enter your WhatsApp number.")
         else:
-            pywhatkit.sendwhatmsg_instantly(whatsapp, message=str(self.number), wait_time=10)
+            pywhatkit.sendwhatmsg_instantly(whatsapp, message=str(self.number), wait_time=15)
             messagebox.showinfo("OTP", "An OTP has been sent to your WhatsApp number.")
 
 
