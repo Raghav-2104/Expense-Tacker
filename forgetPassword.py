@@ -3,48 +3,59 @@ from tkinter import messagebox
 import mysql.connector
 import pywhatkit
 import random
+from Registration import register
+
 from tkinter.messagebox import showinfo
+import sqlite3
 
 class ForgetPasswordWindow(tk.Tk):
     def __init__(self,):
         super().__init__()
         self.title("Forget Password")
-        self.geometry("500x500")
+        self.geometry("500x550")
+        self.configure(bg="#1b1b1b")
         self.create_widgets()
 
     def create_widgets(self):
-        # Label for the WhatsApp number
-        self.whatsapp_label = tk.Label(self, text="WhatsApp Number (with country code):")
-        self.whatsapp_label.pack()
-        # Entry box for the WhatsApp number
+        self.whatsapp_label = tk.Label(self, text="WhatsApp Number (with country code):", fg="white", bg="#1b1b1b")
+        self.whatsapp_label.pack(pady=(20, 5))
+        
         self.whatsapp_entry = tk.Entry(self)
-        self.whatsapp_entry.pack()
-        # Label for the OTP
-        self.otp_label = tk.Label(self, text="OTP received on WhatsApp:")
-        self.otp_label.pack()
-        # Entry box for the OTP
+        self.whatsapp_entry.pack(ipady=5)
+        
+        self.otp_label = tk.Label(self, text="OTP received on WhatsApp:", fg="white", bg="#1b1b1b")
+        self.otp_label.pack(pady=(20, 5))
+        
         self.otp_entry = tk.Entry(self, show="*")
-        self.otp_entry.pack()
-        # Button to generate OTP
-        self.generate_otp_button = tk.Button(self, text="Generate OTP", command=self.generate_otp)
-        self.generate_otp_button.pack()
-        # Label for the new password
-        self.new_password_label = tk.Label(self, text="New Password:")
-        self.new_password_label.pack()
-        # Entry box for the new password
+        self.otp_entry.pack(ipady=5)
+        
+        self.generate_otp_button = tk.Button(self, text="Generate OTP", command=self.generate_otp, bg="#3895D3", fg="white")
+        self.generate_otp_button.pack(pady=(20, 5))
+        
+        self.new_password_label = tk.Label(self, text="New Password:", fg="white", bg="#1b1b1b")
+        self.new_password_label.pack(pady=(20, 5))
+        
         self.new_password_entry = tk.Entry(self, show="*")
-        self.new_password_entry.pack()
-        # Label for confirming the new password
-        self.confirm_password_label = tk.Label(self, text="Confirm Password:")
-        self.confirm_password_label.pack()
-        # Entry box for confirming the new password
+        self.new_password_entry.pack(ipady=5)
+        
+        self.confirm_password_label = tk.Label(self, text="Confirm Password:", fg="white", bg="#1b1b1b")
+        self.confirm_password_label.pack(pady=(20, 5))
+        
         self.confirm_password_entry = tk.Entry(self, show="*")
-        self.confirm_password_entry.pack()
-        # Button to reset password
-        self.reset_button = tk.Button(self, text="Reset Password", command=self.reset_password)
-        self.reset_button.pack()
+        self.confirm_password_entry.pack(ipady=5)
+        
+        self.reset_button = tk.Button(self, text="Reset Password", command=self.reset_password, bg="#3895D3", fg="white")
+        self.reset_button.pack(pady=(20, 5))
+
+        self.back_button = tk.Button(self, text="Back",command=self.back, bg="#3895D3", fg="white")
+        self.back_button.pack(pady=(20, 5))
 
         self.number = random.randint(0, 9999)
+
+    def back(self):
+        register()
+        self.destroy()
+    
     def reset_password(self):
         whatsapp = self.whatsapp_entry.get()
         print(whatsapp[3:])
@@ -64,15 +75,15 @@ class ForgetPasswordWindow(tk.Tk):
             if self.verify_otp(whatsapp, otp):
                 # Update password in database
                 try:
-                    conn = mysql.connector.connect(user='root', password='Raghav@2104', host='localhost', database='expense_tracker')
+                    conn = sqlite3.connect('expense_tracker.db')
                     cursor = conn.cursor()
-                    cursor.execute("UPDATE registration SET password=%s WHERE phone=%s", (new_password, whatsapp[3:]))
+                    cursor.execute("UPDATE registration SET password=? WHERE phone=?", (new_password, whatsapp[3:]))
                     conn.commit()
                     messagebox.showinfo("Success", "Your password has been updated.")
-                except mysql.connector.Error as error:
+                except sqlite3.Error as error:
                     print("Failed to update record to database: {}".format(error))
                 finally:
-                    if conn.is_connected():
+                    if conn:
                         cursor.close()
                         conn.close()
             else:
