@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 import sv_ttk
-from piechart import PieChartWindow
+
 connector = sqlite3.connect("Expense Tracker.db")
 cursor = connector.cursor()
 
@@ -105,6 +105,7 @@ class Home(tk.Tk):
     # Functions
 
     def piechart(self):
+        from piechart import PieChartWindow
         print('Piechart')
         PieChartWindow('Expense Tracker.db')
         self.destroy()

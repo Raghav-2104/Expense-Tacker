@@ -1,7 +1,6 @@
 import tkinter as tk
 import sqlite3
 from tkinter.messagebox import showinfo
-from Registration import register
 import pywhatkit
 from datetime import timedelta
 import datetime
@@ -38,8 +37,8 @@ class LoginForm(tk.Tk):
         self.button_submit = tk.Button(self, text='Submit', width=20, font=("Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.submit)
         self.button_submit.place(x=155, y=320)
 
-        self.button_back = tk.Button(self, text='Back', width=15, font=("Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.back)
-        self.button_back.place(x=50, y=450)
+        # self.button_back = tk.Button(self, text='Back', width=15, font=("Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.back)
+        # self.button_back.place(x=50, y=450)
 
 
     def submit(self):
@@ -54,9 +53,9 @@ class LoginForm(tk.Tk):
         else:
             showinfo(title="Login",message="Login Failed !! Please check Username and Password")
 
-    def back(self):
-        register()
-        self.destroy()
+    # def back(self):
+    #     register()
+    #     self.destroy()
 
 
     def forget(self):

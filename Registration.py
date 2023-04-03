@@ -5,6 +5,7 @@ from tkinter import *
 import re
 import sqlite3
 # from avg import temp
+
 conn = sqlite3.connect('expense_tracker.db')
 mycursor = conn.cursor()
 mycursor.execute('''CREATE TABLE IF NOT EXISTS registration
@@ -60,8 +61,9 @@ class register(tk.Tk):
         self.Login.place(x=280, y=380)
 
     def login(self):
+        from login_form import LoginForm
         self.destroy()
-    #     temp()
+        LoginForm()
     def click(self):
         # print("True")
         length = len(self.PasswordEntry.get())
