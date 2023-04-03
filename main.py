@@ -231,6 +231,8 @@ ttk.Button(buttonFrame, text='Edit Selected Expense', command=edit_expense).plac
 
 ttk.Button(buttonFrame, text='Convert Expense to a sentence', command=selected_expense_to_words).place(x=630, y=11)
 
+ttk.Button(buttonFrame, text='Pie-Chart', command=selected_expense_to_words).place(x=855, y=11)
+
 tree_frame = Frame(root, background="#121212")
 tree_frame.place(relx=0.202, rely=0.11, relwidth=0.79, relheight=0.86)
 

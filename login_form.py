@@ -1,13 +1,12 @@
 import tkinter as tk
 import sqlite3
-from expense import ExpenseTracker
 from tkinter.messagebox import showinfo
 from Registration import register
 import pywhatkit
 from datetime import timedelta
 import datetime
 from forgetPassword import ForgetPasswordWindow
-
+from maincopy import Home
 conn = sqlite3.connect('expense_tracker.db')
 cursor = conn.cursor()
 
@@ -50,8 +49,8 @@ class LoginForm(tk.Tk):
         result = cursor.fetchone()
         if result and result[0] == password:
             showinfo(title="Login",message="Logged in Successfully")
-            tracker = ExpenseTracker()
             self.destroy()
+            tracker = Home()
         else:
             showinfo(title="Login",message="Login Failed !! Please check Username and Password")
 
@@ -65,7 +64,7 @@ class LoginForm(tk.Tk):
         self.destroy()
 
     # def main(self):
-    #     home()
+    #     MAIN()
     #     self.destroy()
 if __name__ == "__main__":
     app = LoginForm()
