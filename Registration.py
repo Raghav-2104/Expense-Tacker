@@ -6,7 +6,7 @@ import re
 import sqlite3
 # from avg import temp
 
-conn = sqlite3.connect('expense_tracker.db')
+conn = sqlite3.connect('Expense Tracker.db')
 mycursor = conn.cursor()
 mycursor.execute('''CREATE TABLE IF NOT EXISTS registration
                 (name TEXT, email TEXT UNIQUE, phone TEXT, user TEXT PRIMARY KEY, password TEXT)''')

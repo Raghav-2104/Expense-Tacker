@@ -9,12 +9,12 @@ import sv_ttk
 connector = sqlite3.connect("Expense Tracker.db")
 cursor = connector.cursor()
 
-connector.execute(
-    'CREATE TABLE IF NOT EXISTS ExpenseTracker (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
-)
 class Home(tk.Tk):
     def __init__(self):
         super().__init__()
+        connector.execute(
+            'CREATE TABLE IF NOT EXISTS ExpenseTracker (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
+        )
         self.geometry("1130x607") 
         self.title("Expense Tracker")
 
@@ -75,8 +75,7 @@ class Home(tk.Tk):
         self.tree_frame = Frame(self, background="#121212")
         self.tree_frame.place(relx=0.202, rely=0.11, relwidth=0.79, relheight=0.86)
 
-        self.table = ttk.Treeview(self.tree_frame, selectmode=BROWSE,
-                            columns=('ID', 'Date', 'Payee', 'Expense', 'Amount', 'Mode of Payment'))
+        self.table = ttk.Treeview(self.tree_frame, selectmode=BROWSE,columns=('ID', 'Date', 'Payee', 'Expense', 'Amount', 'Mode of Payment'))
 
         self.X_Scroller = Scrollbar(self.table, orient=HORIZONTAL, command=self.table.xview)
         self.Y_Scroller = Scrollbar(self.table, orient=VERTICAL, command=self.table.yview)
@@ -235,5 +234,5 @@ class Home(tk.Tk):
 
         self.list_all_expenses()
 if __name__ == '__main__':
-    Home()
-    mainloop()
+    app=Home()
+    app.mainloop()
