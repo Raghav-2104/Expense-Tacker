@@ -13,7 +13,7 @@ class Home(tk.Tk):
     def __init__(self):
         super().__init__()
         connector.execute(
-            'CREATE TABLE IF NOT EXISTS ExpenseTracker (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
+            'CREATE TABLE IF NOT EXISTS Raghav (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
         )
         self.geometry("1130x607") 
         self.title("Expense Tracker")
@@ -114,7 +114,7 @@ class Home(tk.Tk):
 
         self.table.delete(*self.table.get_children())
 
-        all_data = connector.execute('SELECT * FROM ExpenseTracker')
+        all_data = connector.execute('SELECT * FROM Raghav')
         data = all_data.fetchall()
 
         for values in data:
@@ -163,7 +163,7 @@ class Home(tk.Tk):
         surety = messagebox.askyesno('Are you sure?',f'Are you sure that you want to delete the record of {values_selected[2]}')
 
         if surety:
-            connector.execute('DELETE FROM ExpenseTracker WHERE ID=%d' % values_selected[0])
+            connector.execute('DELETE FROM Raghav WHERE ID=%d' % values_selected[0])
             connector.commit()
 
             self.list_all_expenses()
@@ -177,7 +177,7 @@ class Home(tk.Tk):
         if surety:
             self.table.delete(*self.table.get_children())
 
-            connector.execute('DELETE FROM ExpenseTracker')
+            connector.execute('DELETE FROM Raghav')
             connector.commit()
 
             self.clear_fields()
@@ -194,7 +194,7 @@ class Home(tk.Tk):
             messagebox.showerror('Fields empty!', "Please fill all the missing fields before pressing the add button!")
         else:
             connector.execute(
-                'INSERT INTO ExpenseTracker (Date, Payee, Expense, Amount, ModeOfPayment) VALUES (?, ?, ?, ?, ?)',
+                'INSERT INTO Raghav (Date, Payee, Expense, Amount, ModeOfPayment) VALUES (?, ?, ?, ?, ?)',
                 (self.date.get_date(), self.payee.get(), self.VoP.get(), self.amnt.get(), self.MoP.get())
             )
             connector.commit()
