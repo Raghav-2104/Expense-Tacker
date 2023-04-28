@@ -105,7 +105,6 @@ class ForgetPasswordWindow(tk.Tk):
             pywhatkit.sendwhatmsg_instantly(whatsapp, message=str(self.number), wait_time=15)
             messagebox.showinfo("OTP", "An OTP has been sent to your WhatsApp number.")
 
-
 if __name__ == "__main__":
     app = ForgetPasswordWindow()
     app.mainloop()

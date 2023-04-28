@@ -163,10 +163,12 @@ class LoginForm(tk.Tk):
         self.button_submit = tk.Button(self, text='Submit', width=20, font=(
             "Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.submit)
         self.button_submit.place(x=155, y=320)
-        un=self.entry_username.get()
-        # self.button_back = tk.Button(self, text='Back', width=15, font=("Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.back)
-        # self.button_back.place(x=50, y=450)
+        
+        self.button_back = tk.Button(self, text='Back', width=20, font=("Helvetica", 12, "bold"), bg='#5c5c5c', fg='white', command=self.back)
+        self.button_back.place(x=155, y=390)
 
+        un=self.entry_username.get()
+        
     def submit(self):
         global username
         username = self.entry_username.get()
@@ -177,7 +179,7 @@ class LoginForm(tk.Tk):
         if result and result[0] == password:
             showinfo(title="Login", message="Logged in Successfully")
             self.destroy()
-            tracker = Home()
+            Home()
         else:
             showinfo(
                 title="Login", message="Login Failed !! Please check Username and Password")
@@ -185,6 +187,11 @@ class LoginForm(tk.Tk):
     def forget(self):
         ForgetPasswordWindow()
         self.destroy()
+        
+    def back(self):
+        self.destroy()
+        register()
+
 
 
 
@@ -260,6 +267,9 @@ class Home(tk.Tk):
 
         ttk.Button(self.buttonFrame, text='Pie-Chart',
                    command=self.piechart).place(x=680, y=11)
+        
+        ttk.Button(self.buttonFrame, text='Logout',
+                   command=self.logout).place(x=900, y=11)
 
         self.tree_frame = Frame(self, background="#121212")
         self.tree_frame.place(relx=0.202, rely=0.11,
@@ -298,7 +308,10 @@ class Home(tk.Tk):
         self.table.place(relx=0, y=0, relheight=1, relwidth=1.2)
         self.list_all_expenses()
     # Functions
-
+    def logout(self):
+        self.destroy()
+        LoginForm()
+        
     def piechart(self):
         PieChartWindow(username)
         self.destroy()
