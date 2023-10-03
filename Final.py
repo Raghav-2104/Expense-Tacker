@@ -198,9 +198,9 @@ class LoginForm(tk.Tk):
 class Home(tk.Tk):
     def __init__(self):
         super().__init__()
-        conn.execute(
-            f'CREATE TABLE IF NOT EXISTS {username} (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
-        )
+        # conn.execute(
+        #     f'CREATE TABLE IF NOT EXISTS {username} (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date DATETIME, Payee TEXT, Expense TEXT, Amount FLOAT, ModeOfPayment TEXT)'
+        # )
         self.geometry("1130x607")
         self.title("Expense Tracker")
 
